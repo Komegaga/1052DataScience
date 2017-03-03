@@ -22,6 +22,9 @@ if (length(args)==0) {
 ### i_f <- "test.1.csv"
 data <- read.csv(i_f)
 
+library(tools)
+i_f <- file_path_sans_ext(i_f)
+
 w <- round(max(data$weight), digits = 2)
 h <- round(max(data$height), digits = 2)
 
