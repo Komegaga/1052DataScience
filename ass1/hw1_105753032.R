@@ -8,7 +8,7 @@ args = commandArgs(trailingOnly=TRUE)
 if (length(args)==0) {
   stop("USAGE: Rscript hw1_exam.R input", call.=FALSE)
 } else {
-  for(i in c(1:4) ){
+  for(i in c(1:length(args)) ){
     if (args[i] == "-out"){
       out <- args[ i+1 ]
     } else if (args[i] == "-files"){
