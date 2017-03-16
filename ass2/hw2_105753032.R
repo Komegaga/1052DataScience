@@ -1,4 +1,4 @@
-### system("Rscript hw2_105753032.R --target male --files meth1 meth2 --out result.csv")
+#system("Rscript hw2_105753032.R --target male --files method1.csv --out result.csv")
 
 query_func<-function(query_m, i)
 {
@@ -60,9 +60,24 @@ for(file in files)
   heis<-c(heis, d$height[query_func(query_m, d$height)])
   names<-c(names,name)
 }
-out_data<-data.frame(set=names, wei=weis, hei=heis, stringsAsFactors = F)
-index<-sapply(out_data[,c("wei","hei")], query_func, query_m=query_m)
+
+library(ROCR);
+d <- read.table("method1.csv", header = T, sep = ",")
+y <- d$reference
+predictions <- d$prediction
+
+
+
+pred <- prediction(predictions, y);
+
+# Specificity = the  true negative rate TN/(TN+FP)
+# Sensitivity = the  true positive rate = recall = TP/(TP+FN)
+# F1 = 2*precision*recall/(precision+recall)
+
+
+#out_data<-data.frame(set=names, wei=weis, hei=heis, stringsAsFactors = F)
+#index<-sapply(out_data[,c("wei","hei")], query_func, query_m=query_m)
 
 # output file
-out_data<-rbind(out_data,c(query_m,names[index]))
-write.table(out_data, file=out_f, row.names = F, quote = F)
+#out_data<-rbind(out_data,c(query_m,names[index]))
+#write.table(out_data, file=out_f, row.names = F, quote = F)
