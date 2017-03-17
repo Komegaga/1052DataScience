@@ -64,15 +64,18 @@ for(file in files)
 library(ROCR);
 d <- read.table("method1.csv", header = T, sep = ",")
 y <- d$reference
-predictions <- d$prediction
+pred <- d$prediction
 
-
+cM <- table(truth=d$reference, prediction=d$prediction)
+print(cM)
 
 pred <- prediction(predictions, y);
 
 # Specificity = the  true negative rate TN/(TN+FP)
 # Sensitivity = the  true positive rate = recall = TP/(TP+FN)
+# precision = TP/(TP+FP)
 # F1 = 2*precision*recall/(precision+recall)
+# AUC
 
 
 #out_data<-data.frame(set=names, wei=weis, hei=heis, stringsAsFactors = F)
