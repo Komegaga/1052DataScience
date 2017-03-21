@@ -66,6 +66,10 @@ for(file in files)
     specificity <- round ( cM[1, 1] / (cM[1, 1] + cM[1, 2]), digits = 2)
     precision <- round ( cM[2, 2] / (cM[1, 2] + cM[2, 2]), digits = 2)
     F1 <- round ( 2 *  precision * sensitivity / (precision + sensitivity), digits = 2)
+    # AUC evaluation
+    library('ROCR')
+    eval <- prediction(d$pred.score,d$reference)
+    AUC <- round(attributes(performance(eval,'auc'))$y.values[[1]], digits = 2)
   }
   else if (query_m == "female") {
     cM <- table(truth=d$reference, prediction=d$prediction)
@@ -73,14 +77,18 @@ for(file in files)
     specificity <- round (cM[2, 2] / (cM[2, 1] + cM[2, 2]), digits = 2)
     precision <- round (cM[1, 1] / (cM[1, 1] + cM[2, 1]), digits = 2)
     F1 <- round (2 *  precision * sensitivity / (precision + sensitivity), digits = 2)
+    # AUC evaluation
+    library('ROCR')
+    eval <- prediction(1 - d$pred.score,d$reference)
+    AUC <- round(attributes(performance(eval,'auc'))$y.values[[1]], digits = 2)
   } else {
     stop(paste("ERROR: unknown query function", query_m))
   }
   
 # AUC evaluation
-  library('ROCR')
-  eval <- prediction(d$pred.score,d$reference)
-  AUC <- round(attributes(performance(eval,'auc'))$y.values[[1]], digits = 2)
+#  library('ROCR')
+#  eval <- prediction(d$pred.score,d$reference)
+#  AUC <- round(attributes(performance(eval,'auc'))$y.values[[1]], digits = 2)
   
   sens<-c(sens, sensitivity)
   spes<-c(spes, specificity)
