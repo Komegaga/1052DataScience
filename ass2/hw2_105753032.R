@@ -1,4 +1,4 @@
-#system("Rscript hw2_105753032.R --target male --files method1.csv --out result.csv")
+#system("Rscript hw2_105753032.R --target male --files method1.csv method2.csv --out result.csv")
 
 query_func<-function(query_m, i)
 {
@@ -104,9 +104,9 @@ for(file in files)
 # AUC
 
 
-out_data<-data.frame(method=names, sensitivity=sens, specificity=spes, F1=F1s, AUC=AUCs, stringsAsFactors = F)
+out_data<-data.frame("method"=names, "sensitivity"=sens, "specificity"=spes, "F1"=F1s, "AUC"=AUCs, stringsAsFactors = F)
 index<-sapply(out_data[,c("sensitivity","specificity","F1","AUC")], query_func, query_m=query_m)
 
 # output file
 out_data<-rbind(out_data,c("highest",names[index]))
-write.table(out_data, file=out_f, row.names = F, quote = F)
+write.csv(out_data, file=out_f, row.names = F, quote = F)
