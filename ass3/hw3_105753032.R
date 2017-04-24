@@ -127,8 +127,8 @@ data_b <- read.table(b, header=T,sep=",")
 trues_a <- c()
 trues_b <- c()
 
-for(ref in data_a$reference){
-  if(ref == data_a$prediction[i]){
+for(i in 1:nrow(data_a)){
+  if(data_a$reference[i] == data_a$prediction[i]){
     true <- 1
     trues_a <- c(trues_a,true)
   } else {
@@ -136,9 +136,10 @@ for(ref in data_a$reference){
     trues_a <- c(trues_a,true)
   }
 }
+  
 
-for(ref in data_b$reference){
-  if(ref == data_b$prediction[i]){
+for(i in 1:nrow(data_b)){
+  if(data_b$reference[i] == data_b$prediction[i]){
     true <- 1
     trues_b <- c(trues_b,true)
   } else {
@@ -147,14 +148,8 @@ for(ref in data_b$reference){
   }
 }
 
-cM_a <- table(truth=data_a$reference, prediction=data_a$prediction)
-a_1 <- cM_a[1,1] + cM_a[2,2]
-a_0 <- cM_a[1,2] + cM_a[2,1]
-
-cM_b <- table(truth=data_b$reference, prediction=data_b$prediction)
-b_1 <- cM_b[1,1] + cM_b[2,2]
-b_0 <- cM_b[1,2] + cM_b[2,1]
-
+trues_a
+trues_b
 
 ab_test <- rbind( 	# Note: 1 
   data.frame(group=A$method,truth=trues_a), 	# Note: 2 
@@ -163,9 +158,11 @@ ab_test <- rbind( 	# Note: 1
 
 tab <- table(ab_test)
 
+print(tab)
+
 fish <- fisher.test(tab)
 
-
+print(fish$p.value)
 
 #####
 
