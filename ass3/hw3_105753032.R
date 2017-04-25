@@ -127,32 +127,8 @@ data_b <- read.csv(b, header=T,sep=",")
 trues_a <- c()
 trues_b <- c()
 
-for(i in 1:nrow(data_a)){
-  if(data_a$reference[i] == data_a$prediction[i]){
-    true <- 1
-    trues_a <- c(trues_a,true)
-  } else {
-    true <- 0
-    trues_a <- c(trues_a,true)
-  }
-}
-  
 
-for(i in 1:nrow(data_b)){
-  if(data_b$reference[i] == data_b$prediction[i]){
-    true <- 1
-    trues_b <- c(trues_b,true)
-  } else {
-    true <- 0
-    trues_b <- c(trues_b,true)
-  }
-}
-
-
-ab_test <- rbind( 	# Note: 1 
-  data.frame(group=A$method,truth=trues_a), 	# Note: 2 
-  data.frame(group=B$method,truth=trues_b) 	# Note: 3 
-)
+ab_test <- data.frame(A=data_a$prediction,B=data_b$prediction)
 
 tab <- table(ab_test)
 
