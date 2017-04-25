@@ -45,7 +45,7 @@ print(paste("output file:", out_f))
 print(paste("files      :", files))
 
 #query_m <- "male"
-#files <- c("method1.csv","method2.csv","method3.csv")
+#files <- c("method1.csv","method2.csv","method3.csv","method4.csv","method5.csv","method6.csv","method7.csv","method8.csv","method9.csv","method10.csv")
 
 # read files
 names<-c()
@@ -114,7 +114,9 @@ B <- out_data[which.max(out_data$F1),]
 
 b <- paste(B$method , ".csv", sep = "")
 
-A <- out_data[-which.max(out_data$F1),]
+A_left <- out_data[-which.max(out_data$F1),]
+
+A <- A_left[which.max(A_left$F1),]
 
 a <- paste(A$method , ".csv", sep = "")
 
