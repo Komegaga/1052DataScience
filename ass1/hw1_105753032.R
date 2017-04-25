@@ -33,4 +33,4 @@ y <- c(i_f, w, h )
 
 final <- rbind(x, y)
 
-write.table(final, file = out , sep = ",", row.names = FALSE, col.names = FALSE)
+write.table(final, file = out , sep = ",", row.names = FALSE, col.names = FALSE, quote = F)
