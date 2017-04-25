@@ -114,7 +114,7 @@ B <- out_data[which.max(out_data$F1),]
 
 b <- paste(B$method , ".csv", sep = "")
 
-A <- out_data[which.max(-which.max(out_data$F1)),]
+A <- out_data[-which.max(out_data$F1),]
 
 a <- paste(A$method , ".csv", sep = "")
 
@@ -122,7 +122,7 @@ a <- paste(A$method , ".csv", sep = "")
 AB_tests <- c(a, b)
 
 data_a <- read.csv(a, header=T,sep=",")
-data_b <- read.table(b, header=T,sep=",")
+data_b <- read.csv(b, header=T,sep=",")
 
 trues_a <- c()
 trues_b <- c()
@@ -148,8 +148,6 @@ for(i in 1:nrow(data_b)){
   }
 }
 
-trues_a
-trues_b
 
 ab_test <- rbind( 	# Note: 1 
   data.frame(group=A$method,truth=trues_a), 	# Note: 2 
