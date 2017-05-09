@@ -106,29 +106,21 @@ for(file in files)
 # AUC
 
 
-out_data<-data.frame("method"=names, "sensitivity"=sens, "specificity"=spes, "F1"=F1s, "AUC"=AUCs, stringsAsFactors = F)
+out_data<-data.frame("method"=files, "sensitivity"=sens, "specificity"=spes, "F1"=F1s, "AUC"=AUCs, stringsAsFactors = F)
 
 ####
 
 B <- out_data[which.max(out_data$F1),]
 
-b <- paste(B$method , ".csv", sep = "")
-
 A_left <- out_data[-which.max(out_data$F1),]
 
 A <- A_left[which.max(A_left$F1),]
 
-a <- paste(A$method , ".csv", sep = "")
-
-
-AB_tests <- c(a, b)
-
-data_a <- read.csv(a, header=T,sep=",")
-data_b <- read.csv(b, header=T,sep=",")
+data_a <- read.csv(A$method, header=T,sep=",")
+data_b <- read.csv(B$method, header=T,sep=",")
 
 trues_a <- c()
 trues_b <- c()
-
 
 ab_test <- data.frame(A=data_a$prediction,B=data_b$prediction)
 
@@ -146,10 +138,10 @@ print(fish$p.value)
 index<-sapply(out_data[,c("sensitivity","specificity","F1","AUC")], query_func, query_m=query_m)
 
 ###
-
+out_data['method'] = names
 
 if (fish$p.value < 0.05){
-  fish_b <- paste(B$method , "*", sep = "")
+  fish_b <- paste(gsub(".csv", "", basename(B$method)) , "*", sep = "")
   new <- replace(names[index],3,fish_b)
   out_data<-rbind(out_data,c("highest",new))
 } else {
