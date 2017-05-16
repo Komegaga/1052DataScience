@@ -1,3 +1,7 @@
+library(shiny)
+library(gplots)
+library(rsconnect)
+
 function(input, output) {
 
   # datasetInput<- reactive({
@@ -443,14 +447,7 @@ function(input, output) {
   #   
   #   
   #   plot(specificity,sensitivity)
-  # })
+  # }) 
   
-  output$downloadData <- downloadHandler(
-    filename = function() { 
-		 paste(input$dataset, '.csv', sep='') 
-	 },
-    content = function(file) {
-      write.csv(datasetInput(), file)
-    }
-  )
+  
 }

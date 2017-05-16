@@ -14,7 +14,7 @@ fluidPage(
       checkboxInput("method7", "method7", value = F),
       checkboxInput("method8", "method8", value = F),
       checkboxInput("method9", "method9", value = F),
-      checkboxInput("method10", "method10", value = F),
+      checkboxInput("method10", "method10", value = F)
       
       # checkboxGroupInput('dataset', 'Columns in diamonds to show:',
       #                    choices = c("method1", "method2","method3",
@@ -24,7 +24,7 @@ fluidPage(
       #                    #multiple = TRUE
       #             ),
       
-      downloadButton('downloadData', 'Download')
+      
     ),
     mainPanel(
       tabsetPanel(type = "tabs", 
