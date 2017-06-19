@@ -1,5 +1,5 @@
 #system("Rscript final_105753032.R -fold 5 -out performance.csv")
-out_f <- "performance.csv"
+#out_f <- "performance.csv"
 
 # read parameters
 args = commandArgs(trailingOnly=TRUE)
@@ -88,7 +88,7 @@ for (i in 1:k){
                             OverTime+PercentSalaryHike+PerformanceRating+RelationshipSatisfaction+StandardHours+StockOptionLevel+TotalWorkingYears+
                             TrainingTimesLastYear+WorkLifeBalance+YearsAtCompany+YearsInCurrentRole+YearsSinceLastPromotion+YearsWithCurrManager+id
                           , data = dTrain, ntree = 100,importance=TRUE,proximity=TRUE)
-  #mymodel <- randomForest(Attrition ~ . , data = dTrain, ntree = 100,importance=TRUE,proximity=TRUE)
+  #mymodel <- randomForest(Attrition ~ . , data = dTrainAll, ntree = 100,importance=TRUE,proximity=TRUE)
   
   testErro <- myPred(mymodel,testset)
   calError <- myPred(mymodel,dCal)

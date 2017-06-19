@@ -23,8 +23,8 @@ fluidPage(
       tabsetPanel(type = "tabs", 
                   tabPanel("Method Content", tableOutput("table2")),
                   tabPanel("Method Effect", tableOutput("table")),
-                  tabPanel("Plot", plotOutput("plot")),
-                  tabPanel("Plotly", plotlyOutput("plot2"))
+                  tabPanel("Plot", plotOutput("plot"))
+                  # tabPanel("Plotly", plotlyOutput("plot2"))
       )
     )
   )

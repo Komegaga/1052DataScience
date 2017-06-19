@@ -3,9 +3,9 @@ title: final_project
 account: yangminglin
 server: shinyapps.io
 appId: 190414
-bundleId: 873138
+bundleId: 873856
 url: https://yangminglin.shinyapps.io/final_project/
-when: 1497857149.91414
+when: 1497889584.78765
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: Data/.DS_Store|Data/dTrainAll_1.csv|Data/dTrainAll_2.csv|Data/dTrainAll_3.csv|Data/dTrainAll_4.csv|Data/dTrainAll_5.csv|Data/eff.csv|Data/final_105753032.R|Data/performance.csv|Data/WA_Fn-UseC_-HR-Employee-Attrition.csv|Data/methods/.DS_Store
+ignoredFiles: 105753032_Final_Project.pdf|105753032_Final_Project.pptx|finalproject.pptx|readme.txt|Data/.DS_Store|Data/.Rhistory|Data/dTrainAll_1.csv|Data/dTrainAll_2.csv|Data/dTrainAll_3.csv|Data/dTrainAll_4.csv|Data/dTrainAll_5.csv|Data/eff_list.csv|Data/final_105753032.R|Data/performance.csv|Data/Rplot.png|Data/Rplot01.pdf|Data/WA_Fn-UseC_-HR-Employee-Attrition.csv|Data/methods/.DS_Store
