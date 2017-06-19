@@ -1,0 +1,4 @@
+set,accuracy
+trainning,0.86
+calibration,0.86
+test,0.86

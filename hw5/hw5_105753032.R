@@ -40,8 +40,10 @@ data <- data[,-5603]
 library(plyr)
 library(randomForest)
 
-k = 5 #Folds
+#k =  10 #Folds
+k = as.integer(query_n)
 
+set.seed(9487)
 # sample from 1 to k, nrow times (the number of observations in the data)
 data$id <- sample(1:k, nrow(data), replace = TRUE)
 list <- 1:k
@@ -75,7 +77,7 @@ myPred <- function(mymodel,dataset){
   testErro
 }
 
-set.seed(9487)
+
 for (i in 1:k){
   # remove rows with id i from dataframe to create training set
   # select rows with id i to create test set
