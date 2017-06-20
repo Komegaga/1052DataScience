@@ -1,54 +1,47 @@
-#system("Rscript final_105753032.R -fold 5 -out performance.csv")
-#out_f <- "performance.csv"
+---
+title: "R Final Project"
+author: "YangMing"
+date: "2017/6/20"
+output: html_document
+---
 
-# read parameters
-args = commandArgs(trailingOnly=TRUE)
-if (length(args)==0) {
-  stop("USAGE: Rscript hw1.R -query min|max -files file1 file2 ... filen –out out.csv", call.=FALSE)
-}
+#You can follow this file to reproduce my result.
+#Let's do it!
 
-# parse parameters
-i<-1 
-while(i < length(args))
-{
-  if(args[i] == "-fold"){
-    query_n<-args[i+1]
-    i<-i+1
-  }else if(args[i] == "-out"){
-    out_f<-args[i+1]
-    i<-i+1
-  }else{
-    stop(paste("Unknown flag", args[i]), call.=FALSE)
-  }
-  i<-i+1
-}
-
-print("PROCESS")
-print(paste("query fold :", query_n))
-print(paste("files      :", out_f))
-
-### Main
-
-data <- read.csv("WA_Fn-UseC_-HR-Employee-Attrition.csv",header=T,na.strings='NULL')
-
+### 套件載入
+```{r package, message=FALSE, warning=FALSE, include=FALSE}
 library(plyr)
+library(dplyr)
 library(randomForest)
+library(DT)
+```
 
-k =  10 #Folds
-k = as.integer(query_n)
 
+
+### Read dataset
+```{r read dataset}
+data <- read.csv("WA_Fn-UseC_-HR-Employee-Attrition.csv",header=T,na.strings='NULL')
+datatable(data)
+
+```
+
+
+### Set Cross Validation
+```{r cross validation, echo=TRUE, message=FALSE, warning=FALSE}
+k = 10
 set.seed(9487)
 # sample from 1 to k, nrow times (the number of observations in the data)
 data$id <- sample(1:k, nrow(data), replace = TRUE)
-list <- 1:k
+```
 
-
-
-#Creating a progress bar to know the status of CV
+### Set model running Progress bar
+```{r progress bar, echo=TRUE, message=FALSE, warning=FALSE}
 progress.bar <- create_progress_bar("text")
 progress.bar$init(k)
+```
 
-#compute cal&test erro
+### Set Compute cal&test erro function
+```{r function, echo=TRUE, message=FALSE, warning=FALSE}
 myPred <- function(mymodel,dataset){
   prediction <- data.frame()
   testsetCopy <- data.frame()
@@ -76,55 +69,56 @@ trainErros <- c()
 calErrors <- c()
 testErrors <- c()
 
+```
+
+### Run randomForest model
+```{r model}
 
 for (i in 1:k){
   # remove rows with id i from dataframe to create training set
   # select rows with id i to create test set
-  dTrainAll <- subset(data, id %in% list[-i])
-  testset <- subset(data, id %in% c(i))
+  dTrainAll <- subset(data, id != i)
+  testset <- subset(data, id == i )
+ 
   
   useForCal <- rbinom(n=dim(dTrainAll)[[1]],size=1,prob=1/ (k-1))>0 	# Note: 14 
   dCal <- subset(dTrainAll,useForCal)
   dTrain <- subset(dTrainAll,!useForCal)
   
-  # run a random forest model
-  mymodel <- randomForest(Attrition ~ Age+ BusinessTravel+ DailyRate+ DistanceFromHome+Education+ EducationField+ EmployeeCount+EmployeeNumber+EnvironmentSatisfaction+Gender+HourlyRate+
-                            JobInvolvement+JobLevel+JobRole+JobSatisfaction+MaritalStatus+MonthlyIncome+MonthlyRate+NumCompaniesWorked+Over18+
-                            OverTime+PercentSalaryHike+PerformanceRating+RelationshipSatisfaction+StandardHours+StockOptionLevel+TotalWorkingYears+
-                            TrainingTimesLastYear+WorkLifeBalance+YearsAtCompany+YearsInCurrentRole+YearsSinceLastPromotion+YearsWithCurrManager+id
-                          , data = dTrain, ntree = 100,importance=TRUE,proximity=TRUE)
-  # mymodel <- randomForest(Attrition ~ Age+ DailyRate+ DistanceFromHome+EmployeeCount+Gender+
-  #                           MonthlyIncome+MonthlyRate+Over18+
-  #                           OverTime+PerformanceRating+StandardHours
-  #                         , data = dTrain, ntree = 70,importance=TRUE,proximity=TRUE)
-  #mymodel <- randomForest(Attrition ~ . , data = dTrainAll, ntree = 100,importance=TRUE,proximity=TRUE)
+   mymodel <- randomForest(Attrition~.,data=dTrain,ntree=100,importance=TRUE,proximity=TRUE)
   
   testErro <- myPred(mymodel,testset)
   calError <- myPred(mymodel,dCal)
-  
+
   table.model <- mymodel$confusion
   trainErro <- sum(diag(table.model)/sum(table.model))
-  
+
   trainErros <- c(trainErros,trainErro)
   calErrors <- c(calErrors,calError)
   testErrors <- c(testErrors,testErro)
-  
+
   write.csv(dTrainAll,paste0("method", i ,".csv") , row.names = F, quote = F)
   
   progress.bar$step()
 }
 
-# mymodel <- randomForest(Attrition ~ Age+ BusinessTravel+ DailyRate+ DistanceFromHome+Education+ EducationField+ EmployeeCount+EmployeeNumber+EnvironmentSatisfaction+Gender+HourlyRate+
-#                         JobInvolvement+JobLevel+JobRole+JobSatisfaction+MaritalStatus+MonthlyIncome+MonthlyRate+NumCompaniesWorked+Over18+
-#                         OverTime+PercentSalaryHike+PerformanceRating+RelationshipSatisfaction+StandardHours+StockOptionLevel+TotalWorkingYears+
-#                         TrainingTimesLastYear+WorkLifeBalance+YearsAtCompany+YearsInCurrentRole+YearsSinceLastPromotion+YearsWithCurrManager+id
-#                         , data = dTrainAll, ntree = 100,importance=TRUE,proximity=TRUE)
 
+
+```
+### Calculate accuracy
+```{r accuracy}
 set <- c("trainning","calibration","test")
-accuracy <- c(round(mean(trainErros),digits = 2),round(mean(calErrors),digits = 2),round(mean(testErrors), digits = 2))
+accuracy <- c(round(mean(trainErros),digits = 2),
+              round(mean(calErrors),digits = 2),
+              round(mean(testErrors), digits = 2))
 out_data_result <-data.frame("set"=set, "accuracy"=accuracy,stringsAsFactors = F)
 
+datatable(out_data_result)
 
+```
+
+### Calculate Sensitivity Specificity F1 AUC
+```{r eff, echo=TRUE, message=FALSE, warning=FALSE}
 files <- c()
 
 for (i in 1:k) {
@@ -169,19 +163,10 @@ for(file in files){
   names<-c(names,name)
 }
 
-mytable <- function(mymodel,data){
-  
-  prob <-as.data.frame(predict(mymodel,data[,-2],type="prob"))
-  prob_res <-as.data.frame(predict(mymodel,data[,-2],type="response"))
-  # result <- ifelse(prob$prediction=="Yes",prob$Yes,prob$No)
-  prob$pred.score <- prob$Yes
-  prob$reference <- data[,2]
-  prob$prediction <- prob_res[,1]
-  d <- prob[,c(-1:-2)]
-  d
-  
-}
+```
 
+### Output Sensitivity Specificity F1 AUC result
+```{r eff output}
 query_func<-function(query_m, i)
 {
   if(query_m == "male"){
@@ -196,9 +181,12 @@ query_func<-function(query_m, i)
 query_m = "male"
 
 out_data <-data.frame("method"=names, "sensitivity"=sens, "specificity"=spes, "F1"=F1s, "AUC"=AUCs, stringsAsFactors = F)
-write.csv(out_data , file= "eff.csv", row.names = F, quote = F)
 index<-sapply(out_data[,c("sensitivity","specificity","F1","AUC")], query_func, query_m=query_m)
 out_data<-rbind(out_data,c("highest",names[index]))
 
-write.csv(out_data_result , file= out_f, row.names = F, quote = F)
-write.csv(out_data , file= "eff_list.csv", row.names = F, quote = F)
+datatable(out_data)
+
+```
+
+
+

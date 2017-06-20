@@ -7,7 +7,7 @@ fluidPage(
       
       selectInput("y", "Y axis:", 
                   choices = c("sensitivity", "specificity","F1","AUC"), 
-                  selected = "sensitivity"),
+                  selected = "F1"),
       
       selectInput("x", "X axis:", 
                   choices = c("sensitivity", "specificity","F1","AUC"), 

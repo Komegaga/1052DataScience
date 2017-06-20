@@ -1,4 +1,4 @@
 set,accuracy
-trainning,0.85
-calibration,0.87
-test,0.85
+trainning,0.86
+calibration,0.86
+test,0.86

@@ -3,9 +3,9 @@ title: final_project
 account: yangminglin
 server: shinyapps.io
 appId: 190414
-bundleId: 873856
+bundleId: 874469
 url: https://yangminglin.shinyapps.io/final_project/
-when: 1497889584.78765
+when: 1497924486.78657
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: 105753032_Final_Project.pdf|105753032_Final_Project.pptx|finalproject.pptx|readme.txt|Data/.DS_Store|Data/.Rhistory|Data/dTrainAll_1.csv|Data/dTrainAll_2.csv|Data/dTrainAll_3.csv|Data/dTrainAll_4.csv|Data/dTrainAll_5.csv|Data/eff_list.csv|Data/final_105753032.R|Data/performance.csv|Data/Rplot.png|Data/Rplot01.pdf|Data/WA_Fn-UseC_-HR-Employee-Attrition.csv|Data/methods/.DS_Store
+ignoredFiles: 105753032_Final_Project.pdf|105753032_Final_Project.pptx|finalproject.pptx|readme.txt|Data/.DS_Store|Data/.Rhistory|Data/eff_list.csv|Data/eff.csv|Data/final_105753032.R|Data/method1.csv|Data/method10.csv|Data/method2.csv|Data/method3.csv|Data/method4.csv|Data/method5.csv|Data/method6.csv|Data/method7.csv|Data/method8.csv|Data/method9.csv|Data/performance.csv|Data/Rplot.png|Data/Rplot01.pdf|Data/WA_Fn-UseC_-HR-Employee-Attrition.csv|Data/methods/.DS_Store
