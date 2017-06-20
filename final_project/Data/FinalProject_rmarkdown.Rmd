@@ -2,7 +2,9 @@
 title: "R Final Project"
 author: "YangMing"
 date: "2017/6/20"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 #You can follow this file to reproduce my result.
